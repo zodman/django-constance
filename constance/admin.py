@@ -21,6 +21,7 @@ from django.utils.encoding import smart_bytes
 from django.utils.formats import localize
 from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
+from django.utils.timezone import make_aware, is_aware, is_naive
 
 from . import LazyConfig, settings
 
@@ -144,7 +145,11 @@ class ConstanceForm(forms.Form):
                 self.cleaned_data[file_field] = file.name
 
         for name in settings.CONFIG:
-            if getattr(config, name) != self.cleaned_data[name]:
+            setting_name = getattr(config,name)
+            if isinstance(setting_name, datetime) and \
+               is_naive(setting_name) and is_aware(self.cleaned_data[name]):
+                setting_name = make_aware(setting_name)
+            if setting_name != self.cleaned_data[name]:
                 setattr(config, name, self.cleaned_data[name])
 
     def clean_version(self):
