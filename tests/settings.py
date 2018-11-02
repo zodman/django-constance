@@ -87,6 +87,15 @@ STATIC_ROOT = './static/'
 
 STATIC_URL = '/static/'
 
+TIME_ZONE = 'America/Merida'
+
+USE_I18N = True
+
+
+USE_TZ = True
+
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
