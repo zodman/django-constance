@@ -146,10 +146,9 @@ class ConstanceForm(forms.Form):
 
         for name in settings.CONFIG:
             setting_name = getattr(config,name)
-#            if isinstance(setting_name, datetime):
-            #if isinstance(setting_name, datetime) and \
-#               is_aware(setting_name) and is_aware(self.cleaned_data[name]):
-#                setting_name = make_aware(setting_name)
+            if isinstance(setting_name, datetime) and \
+               is_naive(setting_name) and is_aware(self.cleaned_data[name]):
+                setting_name = make_aware(setting_name)
             if setting_name != self.cleaned_data[name]:
                 setattr(config, name, self.cleaned_data[name])
 
