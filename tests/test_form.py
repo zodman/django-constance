@@ -1,10 +1,14 @@
-from constance.admin import ConstanceForm
+# set encoding=utf-8
 from django.forms import fields
 from django.test import TestCase
-
+from decimal import Decimal
+import datetime
+import mock
+from django.utils import timezone
+from constance.admin import ConstanceForm
+from constance import config
 
 class TestForm(TestCase):
-
     def test_form_field_types(self):
 
         f = ConstanceForm({})
@@ -24,3 +28,4 @@ class TestForm(TestCase):
         # from CONSTANCE_ADDITIONAL_FIELDS
         self.assertIsInstance(f.fields['CHOICE_VALUE'], fields.ChoiceField)
         self.assertIsInstance(f.fields['EMAIL_VALUE'], fields.EmailField)
+
