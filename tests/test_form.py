@@ -9,6 +9,12 @@ from constance.admin import ConstanceForm
 from constance import config
 
 class TestForm(TestCase):
+<<<<<<< Updated upstream
+=======
+    def setUp(self):
+        self.conf = dict(config)
+
+>>>>>>> Stashed changes
     def test_form_field_types(self):
 
         f = ConstanceForm({})
@@ -33,8 +39,14 @@ class TestForm(TestCase):
 
     @mock.patch("constance.admin.ConstanceForm.clean_version", lambda x: 'test')
     def test_form_save(self):
+<<<<<<< Updated upstream
         old_conf = config.DATETIME_VALUE
         now = timezone.now()
+=======
+        now = timezone.now()
+        old_value = self.conf.DATETIME_VALUE
+        self.conf.DATETIME_VALUE= now
+>>>>>>> Stashed changes
         initial = {}
         data = {
             'FLOAT_VALUE': 3.1415926536,
@@ -57,6 +69,11 @@ class TestForm(TestCase):
         f = ConstanceForm(initial, data=data)
         self.assertTrue(f.is_valid(), msg=f.errors.as_data())
         f.save()
+<<<<<<< Updated upstream
         self.assertEqual(config.DATETIME_VALUE, f.cleaned_data["DATETIME_VALUE"])
         config.DATETIME_VALUE = old_conf
+=======
+        self.assertEqual(self.conf.DATETIME_VALUE, f.cleaned_data["DATETIME_VALUE"])
+        config.DATETIME_VALUE=old_value
+>>>>>>> Stashed changes
 
