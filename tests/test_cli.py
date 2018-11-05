@@ -7,6 +7,8 @@ from django.core.management import call_command, CommandError
 from django.test import TransactionTestCase
 from django.utils.encoding import smart_str
 from django.utils.six import StringIO
+from django.utils import timezone
+from django.conf import settings
 
 from constance import config
 
@@ -52,8 +54,8 @@ u"""        BOOL_VALUE	True
         self.assertEqual(config.EMAIL_VALUE, "blah@example.com")
 
         call_command('constance', *('set', 'DATETIME_VALUE', '2011-09-24', '12:30:25'), stdout=self.out)
-
-        self.assertEqual(config.DATETIME_VALUE, datetime(2011, 9, 24, 12, 30, 25))
+        datetime_result = datetime(2011, 9, 24, 12, 30, 25)
+        self.assertEqual(config.DATETIME_VALUE, datetime_result)
 
     def test_get_invalid_name(self):
         self.assertRaisesMessage(CommandError, "NOT_A_REAL_CONFIG is not defined in settings.CONSTANCE_CONFIG",
